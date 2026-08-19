@@ -23,3 +23,7 @@ AI agent：調整文件圖示與說明，區分 Ingress 物件的 namespace 範�
 AI agent：強化 MySQL Pod 的 required node anti-affinity 與跨 AZ `DoNotSchedule` topology spread；同時保留說明：兩顆 MySQL Pod 的 baseline StatefulSet 不包含 replication、failover 或讀取端 HA。
 
 驗證：Terraform fmt/init/validate 通過；Kubernetes manifests 經 strict schema validation，15 個 resources 全數有效；兩個 Service selector 均對應工作負載 labels。
+
+使用者：進行第三題，找出分數排名第二名學生所在班級。
+
+AI agent：以 `score` 和 `class` 的 `name` 欄位 join，依分數由大到小排序，再使用 `LIMIT 1 OFFSET 1` 取第二筆；以題目資料驗證結果為 A。另補充 `DENSE_RANK()` 處理同分需求的寫法。
