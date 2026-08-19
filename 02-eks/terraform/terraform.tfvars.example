@@ -1,0 +1,22 @@
+aws_region       = "ap-northeast-1"
+project_name     = "asiayo-pretest"
+environment      = "dev"
+vpc_cidr         = "10.20.0.0/16"
+az_count         = 2
+nat_gateway_mode = "per_az"
+
+node_instance_types     = ["t3.large"]
+node_group_min_size     = 2
+node_group_desired_size = 2
+node_group_max_size     = 4
+
+app_replicas   = 2
+mysql_replicas = 2
+domain_name    = "app.example.com"
+app_image      = "YOUR_REGISTRY/YOUR_APP:TAG"
+mysql_image    = "mysql:8.4"
+
+# Add organization-specific tags as needed.
+tags = {
+  Owner = "platform"
+}
