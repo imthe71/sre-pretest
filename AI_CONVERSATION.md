@@ -43,3 +43,7 @@ AI agent：Writer 以垂直擴容處理必要交易；Read Replicas 以水平擴
 使用者：確認誰負責分流。
 
 AI agent：CloudFront 負責邊緣快取；ALB 是動態 API 的主要 L7 分流器；Kubernetes Service 提供 Pod endpoints；Reader Endpoint 分散新的讀取連線；SQS 將非同步工作分給 Consumer Pods。HPA 與 Node Group 負責擴容，不是流量分流器。
+
+使用者：檢查 GitHub 後發現第一題遺漏。
+
+AI agent：補上 `01-word-frequency/`。以 Python 讀取 `words.txt`，將內容轉為不分大小寫的單字、排除標點符號後統計次數。若最高次數同分，保留全部同分單字並以字母排序輸出；題目範例驗證輸出為 `4 twinkle`。
