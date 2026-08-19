@@ -1,0 +1,13 @@
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: mysql
+  namespace: asiayo
+  labels:
+    app.kubernetes.io/name: mysql
+    app.kubernetes.io/part-of: asiayo
+spec:
+  maxUnavailable: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: mysql
