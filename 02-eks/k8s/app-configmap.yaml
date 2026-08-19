@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-config
+  namespace: asiayo
+  labels:
+    app.kubernetes.io/name: app
+    app.kubernetes.io/part-of: asiayo
+data:
+  # Use Service DNS, never a Pod IP. A production HA database needs separate
+  # mysql-rw/mysql-ro endpoints supplied by a DB operator or router.
+  DB_HOST: "mysql-headless.asiayo.svc.cluster.local"
+  DB_PORT: "3306"
