@@ -55,3 +55,7 @@ AI agent：先確認 per-target latency、5xx、request 與 endpoint 範圍，�
 使用者：進行情境實戰題三。EC2 上的服務正常，但無法透過 SSH 登入，且已確認不是網路或防火牆問題。
 
 AI agent：先用 `ssh -vvv` 判斷是 connection refused、public key 拒絕或連線卡住；不直接重開機。優先以 SSM Session Manager、EC2 Serial Console 取得主機存取，最後才採用建立 snapshot 後的 EBS rescue。登入後檢查 sshd、設定語法、Disk／inode、CPU／Memory、kernel log、帳號、SSH key 與權限；修復後以測試連線驗證，再恢復服務流量。平時應建立 SSM、break-glass、監控與復原演練。
+
+使用者：進行情境實戰題四。既有 ELK／EFK Cluster 已存在，新服務需要讓 RD 在 Kibana 查 log。
+
+AI agent：確認先盤點既有 collector、欄位規範、index／data stream、retention 與 Kibana Data View，再和 RD 對照新服務 log 格式與實際除錯需求。新服務符合 JSON、時間、level、service、environment、request／trace ID、stack trace 與敏感資料遮罩規範後，沿用原本 Fluent Bit／Fluentd／Filebeat 收集與路由方式整合。只有 retention、權限、mapping 或 log volume 有特殊需求時，才建立獨立 index／data stream；最後以測試 log 與 RD 查詢驗證。
