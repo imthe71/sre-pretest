@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: app-data
+  namespace: asiayo
+  labels:
+    app.kubernetes.io/name: app
+    app.kubernetes.io/part-of: asiayo
+spec:
+  accessModes:
+    - ReadWriteMany
+  storageClassName: efs-rwx
+  resources:
+    requests:
+      storage: ${APP_PVC_SIZE}
