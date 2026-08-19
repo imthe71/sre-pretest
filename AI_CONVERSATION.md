@@ -27,3 +27,19 @@ AI agent：強化 MySQL Pod 的 required node anti-affinity 與跨 AZ `DoNotSche
 使用者：進行第三題，找出分數排名第二名學生所在班級。
 
 AI agent：以 `score` 和 `class` 的 `name` 欄位 join，依分數由大到小排序，再使用 `LIMIT 1 OFFSET 1` 取第二筆；以題目資料驗證結果為 A。另補充 `DENSE_RANK()` 處理同分需求的寫法。
+
+使用者：開始整理情境實戰題一。題目是假設活動網站上線後，訪客可能成長至平常 100 倍以上；先假設 CDN 已存在，聚焦 WAF、EKS、資料庫與快取的處理方式。
+
+AI agent：確認流量路徑為：靜態內容由 CloudFront 快取；動態 API 由 ALB 分流至 EKS App Pods；可快取查詢先讀 Redis，miss 後經 Reader Endpoint 讀 Read Replicas；下單、扣名額、付款進 RDS Proxy 與單一 Writer；寄信、通知、分析改為 SQS 非同步處理。
+
+使用者：EKS App Pods 應先提高預設值，並先分析監控資料決定 Pod 與 Node 的基礎容量。
+
+AI agent：以單 Pod 穩定 RPS、p95/p99、錯誤率、CPU、記憶體、資料庫與 Redis 指標作為容量依據；活動前預擴 App `minReplicas` 與 Node Group `min/desired`，保留 1.3～1.5 倍餘裕與 N+1 Node 容量。
+
+使用者：確認資料庫的處理方式。
+
+AI agent：Writer 以垂直擴容處理必要交易；Read Replicas 以水平擴充處理讀取；Multi-AZ 用於可用性而不是增加寫入效能。Redis、RDS Proxy、WAF 與 SQS 用來避免資料庫直接承受 100 倍請求。
+
+使用者：確認誰負責分流。
+
+AI agent：CloudFront 負責邊緣快取；ALB 是動態 API 的主要 L7 分流器；Kubernetes Service 提供 Pod endpoints；Reader Endpoint 分散新的讀取連線；SQS 將非同步工作分給 Consumer Pods。HPA 與 Node Group 負責擴容，不是流量分流器。
