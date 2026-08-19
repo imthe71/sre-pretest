@@ -1,0 +1,17 @@
+# Cluster-scoped. The EFS CSI add-on is installed by Terraform.
+# `${EFS_FILE_SYSTEM_ID}` is rendered from Terraform output before applying.
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: efs-rwx
+provisioner: efs.csi.aws.com
+parameters:
+  provisioningMode: efs-ap
+  fileSystemId: ${EFS_FILE_SYSTEM_ID}
+  directoryPerms: "700"
+  gidRangeStart: "1000"
+  gidRangeEnd: "2000"
+  basePath: "/asiayo-app"
+reclaimPolicy: Retain
+volumeBindingMode: Immediate
+allowVolumeExpansion: true
