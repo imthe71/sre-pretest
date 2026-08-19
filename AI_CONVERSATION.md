@@ -47,3 +47,7 @@ AI agent：CloudFront 負責邊緣快取；ALB 是動態 API 的主要 L7 分流
 使用者：檢查 GitHub 後發現第一題遺漏。
 
 AI agent：補上 `01-word-frequency/`。以 Python 讀取 `words.txt`，將內容轉為不分大小寫的單字、排除標點符號後統計次數。若最高次數同分，保留全部同分單字並以字母排序輸出；題目範例驗證輸出為 `4 twinkle`。
+
+使用者：進行情境實戰題二。API Server Cluster 中只有一台 response latency 偏高，且有時正常、有時 timeout。
+
+AI agent：先確認 per-target latency、5xx、request 與 endpoint 範圍，並將異常機從 Load Balancer 摘流量但保留現場。依序檢查主機 CPU、Memory、Disk I/O、TCP connection、kernel log，再以 request ID／trace ID 檢查 application log、下游 dependency、connection pool、DNS 與 retry；最後對照正常機的版本、設定、流量與網路差異。IP 衝突列為網路排查的一項，但需先以 ARP、NIC error、packet drop 與 retransmit 等證據確認。
