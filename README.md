@@ -13,5 +13,6 @@
 | `04-traffic-surge/` | 情境實戰題一：活動流量暴增時的架構、容量與風險處理。 |
 | `05-api-timeout/` | 情境實戰題二：單台 API Server 延遲與 timeout 排查。 |
 | `06-ec2-ssh-recovery/` | 情境實戰題三：EC2 服務正常但無法 SSH 的排查與復原。 |
+| `07-log-integration/` | 情境實戰題四：新服務整合既有 ELK／EFK 的流程。 |
 
 各題的部署方式、驗證結果與限制，請參考對應題號目錄內的 README。
