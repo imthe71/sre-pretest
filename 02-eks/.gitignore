@@ -1,0 +1,7 @@
+# Local/generated files
+terraform/.terraform/
+terraform/*.tfstate
+terraform/*.tfstate.*
+k8s/values.env
+work/rendered-k8s/
+work/tools/
