@@ -51,3 +51,7 @@ AI agent：補上 `01-word-frequency/`。以 Python 讀取 `words.txt`，將內�
 使用者：進行情境實戰題二。API Server Cluster 中只有一台 response latency 偏高，且有時正常、有時 timeout。
 
 AI agent：先確認 per-target latency、5xx、request 與 endpoint 範圍，並將異常機從 Load Balancer 摘流量但保留現場。依序檢查主機 CPU、Memory、Disk I/O、TCP connection、kernel log，再以 request ID／trace ID 檢查 application log、下游 dependency、connection pool、DNS 與 retry；最後對照正常機的版本、設定、流量與網路差異。IP 衝突列為網路排查的一項，但需先以 ARP、NIC error、packet drop 與 retransmit 等證據確認。
+
+使用者：進行情境實戰題三。EC2 上的服務正常，但無法透過 SSH 登入，且已確認不是網路或防火牆問題。
+
+AI agent：先用 `ssh -vvv` 判斷是 connection refused、public key 拒絕或連線卡住；不直接重開機。優先以 SSM Session Manager、EC2 Serial Console 取得主機存取，最後才採用建立 snapshot 後的 EBS rescue。登入後檢查 sshd、設定語法、Disk／inode、CPU／Memory、kernel log、帳號、SSH key 與權限；修復後以測試連線驗證，再恢復服務流量。平時應建立 SSM、break-glass、監控與復原演練。
